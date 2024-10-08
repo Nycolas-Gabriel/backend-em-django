@@ -1,6 +1,6 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-
+from django.urls import reverse
 from .forms import NameForm
 
 
@@ -14,10 +14,15 @@ def get_name(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponseRedirect("/thanks/")
+            name = form.cleaned_data['your_name']
+            return HttpResponseRedirect(reverse('contacts:thanks', args=(name,)))
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = NameForm()
 
     return render(request, "contacts/name.html", {"form": form})
+
+
+def thanks(request, name):
+    return HttpResponse(f"Obrigado {name}!")
