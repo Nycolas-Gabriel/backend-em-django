@@ -1,7 +1,19 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .forms import NameForm
+from .forms import NameForm, ContactForm
+
+
+def creat(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["subject"]
+            form.save()
+            return HttpResponseRedirect(reverse("contacts:thanks", args=(name,)))
+    else:
+        form = ContactForm()
+    return render(request, "contacts/create.html", {"form": form})
 
 
 def get_name(request):
@@ -14,8 +26,8 @@ def get_name(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            name = form.cleaned_data['your_name']
-            return HttpResponseRedirect(reverse('contacts:thanks', args=(name,)))
+            name = form.cleaned_data["your_name"]
+            return HttpResponseRedirect(reverse("contacts:thanks", args=(name,)))
 
     # if a GET (or any other method) we'll create a blank form
     else:
