@@ -2,14 +2,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .forms import NameForm, ContactForm
-# from django.conf import settings
-# from django.shortcuts import redirect
+from django.conf import settings
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import permission_required
 
-from django.contrib.auth.decorators import login_required
 
-
-@login_required
-def creat(request):
+def create(request):
+    if not request.user.is_authenticated:
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
