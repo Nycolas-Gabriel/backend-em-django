@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import permission_required
 
 
+@permission_required("contacts.add_contact")
 def create(request):
     if not request.user.is_authenticated:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
