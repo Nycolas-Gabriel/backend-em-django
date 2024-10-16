@@ -1,5 +1,5 @@
 
-# Projeto Backend Capyba
+# Projeto Backend Django
 
 Este é um projeto básico criado com o framework Django, contendo três aplicações principais: **Polls**, **Accounts**, e **Contacts**. Ele foi desenvolvido com o intuito de aprender e explorar as funcionalidades do Django.
 
